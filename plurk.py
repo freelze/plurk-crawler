@@ -214,7 +214,6 @@ def parsePostsJob(i):
 
 
 def getResponsesJob(pID):
-
 	#userSearch = plurk.callAPI('/APP/UserSearch/search', {'query': userName})['users']
 	#owner_id_int = userSearch[0]['id']
 
@@ -341,11 +340,11 @@ if __name__ == "__main__":
 
 	plurk_id_list = []
 
-	#q = mp.Manager().Queue()
+
 	#q = mp.Queue()
 	q = mp.JoinableQueue()
-	pID = ""
-	pool=""
+	
+	pool = ""
 	while (True):
 		json = getPublicPlurks(plurk, id, timeOffset)
 		if (len(json) == 0):
@@ -356,84 +355,23 @@ if __name__ == "__main__":
 					 splitStr[4]
 		print(timeOffset)
 
-		# Parse
+		
 
 		lowStandardFav = -1
 		postCount = 0
 		higherFavPostCount = 0
 		downloadedMedia = 0
 		response_media = 0
-
-		#multiInfoDict = {'lowStandardFav': lowStandardFav, 'postCount': postCount,
-					#	 'higherFavPostCount': higherFavPostCount, 'downloadedMedia': downloadedMedia,
-					#	 'response_media': response_media, 'thisPostMediaCount': 0}
-		#for post in json:
-			#print(len(post))
-			#test_1(post)
-			#print(post['favorite_count'])
-			#parsePostsJob(post)
-		#break
-			#
-		#manager = Manager()
-		#json_dict = manager.dict()
-
-
+		# Parse
 		pool = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav,q))
 		q.put( pool.map_async(parsePostsJob, json) ) #.map_async
 	pool.close()
 	pool.join()
-	#q.task_done()
-		#plurk_id_list.append(pID)
-	"""
-	print("%%%%%%%%%%%%%%%%%%%%%")
-	while (not q.empty()):
-		qGet = q.get()
-		print(qGet)
-		plurk_id_list.append(qGet)
-	print("%%%%%%%%%%%%%%%%%%%%%")
-	"""
-	#joinPidList = list(itertools.chain.from_iterable(plurk_id_list))
-	#print(joinPidList)
-
-
-
-
-	"""
-	reQ = q.task_done()
-	print('state--->', reQ)
-	print("&&&&&&&&&&&&&&&&&&&")
-	while (not q.empty()):
-		ppid = q.get()
-		print(ppid)
-		plurk_id_list.append( ppid )
-		q.task_done()
-
-	print("&&&&&&&&&&&&&&&&&&&")"""
-	#print(plurk_id_list)
-	"""
-	while (not q.empty()):
-		ppid = q.get()
-		print(ppid)
-		q.task_done()"""
-
-	#q.join()
 
 	pool2 = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav, q))
 	p = pool2.map_async(getResponsesJob, plurk_id_list)  # map_async
 	pool2.close()
 	pool2.join()
-
-	# Normal way
-	#for plurkId in list(filter(None.__ne__, joinPidList)):
-		#getResponsesJob(plurk, plurkId, id, owner_id)
-		#parsePosts(plurk, json, userId, multiInfoDict)
-		#print(multiInfoDict)
-		#break
-	#loop = asyncio.get_event_loop()
-	#loop.run_until_complete(main(loop))
-	#p.wait()
-
-	
 	
 	print("crawl", len(plurk_id_list), "plurk posts." )
 	#print(plurk_id_list)
