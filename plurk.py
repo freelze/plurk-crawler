@@ -340,8 +340,6 @@ if __name__ == "__main__":
 					 splitStr[4]
 		print(timeOffset)
 
-		
-
 		lowStandardFav = -1
 		postCount = 0
 		higherFavPostCount = 0
