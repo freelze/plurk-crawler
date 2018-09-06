@@ -320,11 +320,8 @@ def get_cursor(_plurk, _userName, _owner_id, _lowStandardFav, _queue):
 
 if __name__ == "__main__":
 	t1 = time.time()
-
-
-	plurk = plurkApiLogin()
-
 	
+	plurk = plurkApiLogin()	
 	userName = ''  # USER YOU WANT TO CRAWL
 	userSearch = plurk.callAPI('/APP/UserSearch/search', {'query': userName})['users']
 
@@ -333,6 +330,7 @@ if __name__ == "__main__":
 		userPlurkhtml = requests.get(userPlurkUrl, timeout=10)
 		id = 123
 		print(userPlurkhtml)
+		exit()
 	# print(userName, " has block the search or you type a wrong userName.")
 	else:
 		id = userSearch[0]['id']
