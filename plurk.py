@@ -76,20 +76,6 @@ def parsePostsJob(i):
 	print('id=',id)
 	basePath = os.getcwd() + '\\'
 	baseUrl = "https://www.plurk.com/p/"
-	"""
-	NUM_WORKERS = 30
-	threads = []
-	for i in range(NUM_WORKERS):
-		tumblr = Tumblr(q)
-		tumblr.setDaemon(True)
-		tumblr.start()
-		threads.append(tumblr)
-
-	while True:
-		for i in threads:
-			if not i.isAlive():
-				break
-		time.sleep(1)"""
 
 	thisPostMediaCount = 0
 	#multiInfoDict['postCount'] += 1
