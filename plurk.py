@@ -222,8 +222,15 @@ def getResponsesJob(pID):
 			fileNameTime = splitStr[3] + '_' + str(abbr_to_num[splitStr[2]]) + '_' + splitStr[1]
 
 			#print("author content")
-			res_content_raw = j['content_raw'].split()
-			for responseLink in res_content_raw:
+			content_str = j['content']
+			match = re.findall(r"href=\S+", content_str)
+			matchList = []
+			for matchCase in match:
+				matchCase = matchCase[:-1]
+				matchCase = matchCase[6:]
+				matchList.append(matchCase)
+			#res_content_raw = j['content_raw'].split()
+			for responseLink in matchList: # res_content_raw
 				if (responseLink[-4:] == '.jpg'):
 					if (re.match(url_validation_regex, responseLink) is None):
 						print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
