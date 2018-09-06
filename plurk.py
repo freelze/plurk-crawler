@@ -351,7 +351,7 @@ if __name__ == "__main__":
 		qGet = q.get()
 		#print(qGet)
 		plurk_id_list.append(qGet)
-	#q.join	
+	#q.join()
 	pool2 = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav, q))
 	p = pool2.map_async(getResponsesJob, plurk_id_list)  # map_async
 	pool2.close()
