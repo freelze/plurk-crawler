@@ -320,12 +320,7 @@ if __name__ == "__main__":
 		id = userSearch[0]['id']
 		print(userSearch[0]['display_name'])
 
-	# pool = mp.Pool(8)
-	timeOffset = strftime("%Y-%m-%dT%H:%M:%S", gmtime())
-
-	plurk_id_list = []
-
-
+	timeOffset = strftime("%Y-%m-%dT%H:%M:%S", gmtime()
 	#q = mp.Queue()
 	q = mp.JoinableQueue()
 	
@@ -351,6 +346,12 @@ if __name__ == "__main__":
 	pool.close()
 	pool.join()
 
+	plurk_id_list = []
+	while (not q.empty()):
+		qGet = q.get()
+		#print(qGet)
+		plurk_id_list.append(qGet)
+	#q.join	
 	pool2 = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav, q))
 	p = pool2.map_async(getResponsesJob, plurk_id_list)  # map_async
 	pool2.close()
