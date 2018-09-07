@@ -361,6 +361,8 @@ if __name__ == "__main__":
 		# Parse
 		pool = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav,q))
 		q.put( pool.map_async(parsePostsJob, json) ) #.map_async
+		pool.close()
+		pool.join()
 	pool.close()
 	pool.join()
 
