@@ -318,8 +318,18 @@ if __name__ == "__main__":
 	if (len(userSearch) == 0):
 		userPlurkUrl = 'https://www.plurk.com/' + userName
 		userPlurkhtml = requests.get(userPlurkUrl, timeout=10)
-		id = 123
-		print(userPlurkhtml)
+
+		userExist = re.search(r"<title>.+</title>", userPlurkhtml.text)
+		title = userExist.group()[7:]
+		title = title[:-8]
+		if (title != 'User Not Found! - Plurk'):
+			# print("User Found!")
+			settings = re.search(r"var\sSETTINGS\s=\s\{\S+user_id\":(\d+),\S+}", userPlurkhtml.text)
+			id = int( settings.group(1) )
+			print("user id =", id)
+		else:
+			print("User Not Found!")
+			exit()
 	# print(userName, " has block the search or you type a wrong userName.")
 	else:
 		id = userSearch[0]['id']
