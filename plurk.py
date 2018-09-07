@@ -88,6 +88,8 @@ def parsePostsJob(i):
 		#print("@@@@@@@@@@replurk@@@@@@@@@@")
 		return
 	if (i['favorite_count'] > lowStandardFav):
+		parsePostsJob.q.put(i['plurk_id'])
+		
 		print("===================================================================================")
 		#multiInfoDict['higherFavPostCount'] += 1
 		owner_id_int = i['owner_id']
@@ -106,7 +108,7 @@ def parsePostsJob(i):
 		print("response_count:", i['response_count'])
 		pprint(i['content_raw'])  # type:str
 
-		parsePostsJob.q.put(i['plurk_id'])
+		
 
 		_list = i['content'].split()
 		for content in _list:
@@ -360,9 +362,10 @@ if __name__ == "__main__":
 		response_media = 0
 		# Parse
 		pool = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav,q))
-		q.put( pool.map_async(parsePostsJob, json) ) #.map_async
+		#q.put( pool.map_async(parsePostsJob, json) ) 
+		pool.map_async(parsePostsJob, json)
 		pool.close()
-		pool.join()
+		#pool.join() # Not sure
 	pool.close()
 	pool.join()
 
