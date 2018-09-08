@@ -12,29 +12,42 @@ Download all the photos from plurk users. 下載指定的噗浪使用者的圖�
 作業系統:
 ---
 只測試過Windows
+
 前置作業:
 ---
 
 確定你有安裝python3.6+
 
  `pip install plurk-oauth `
+ 
  `pip install base36 `
 
 有一個Plurk帳號
+
 並到http://www.plurk.com/PlurkApp/ 申請API服務
+
 dada的教學文: https://dada.tw/2011/10/28/426/
+
 取得
+
     App Key
+    
     App Secret
+    
     Access Token
+    
     Access Token Secret
+    
 後
 
-## 更改plurk.py裡的資料:
+#### 更改plurk.py裡的資料:
 
 CONSUMER_KEY = 'App Key放這裡'
+
 CONSUMER_SECRET = 'App Secret放這裡'
+
 ACCESS_TOKEN = 'Access Token放這裡'
+
 ACCESS_TOKEN_SECRET = 'Access Token Secret放這裡'
 
 更改你想抓取的使用者帳號
@@ -50,8 +63,11 @@ userName = '你想抓取的使用者帳號' # User You Want To Crawl
 ---
 
 爬取 5273 個噗浪貼文
+
 共花了 672.0514919757843 秒
+
 平均一張貼文花了 0.12745144926 秒
 
 每個貼文留言數、圖片數不一樣
+
 所以參考就好
