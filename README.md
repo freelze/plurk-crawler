@@ -1,6 +1,6 @@
 plurk-crawler
 =========================================================
-Download all the photos from plurk users. 下載指定的噗浪使用者的圖片
+Download all the photos from plurk users.
 
 下載一個噗浪使用者所有發過的圖片 ( 包含在下方回覆的圖片 )
 
