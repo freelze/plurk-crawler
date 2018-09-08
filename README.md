@@ -31,7 +31,6 @@ Download all the photos from plurk users. 下載指定的噗浪使用者的圖�
     Access Token  
     Access Token Secret
     
-  後
 
 4.更改plurk.py裡的資料:
 
