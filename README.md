@@ -18,9 +18,9 @@ Download all the photos from plurk users. 下載指定的噗浪使用者的圖�
  
    `pip install base36 `
 
-2.有一個Plurk帳號
+2.註冊一個Plurk帳號 ( https://www.plurk.com/signup )
 
-3.到http://www.plurk.com/PlurkApp/ 申請API服務
+3.申請API服務 http://www.plurk.com/PlurkApp/ 
 
   ( 請參考dada的教學文: https://dada.tw/2011/10/28/426/ )
 
