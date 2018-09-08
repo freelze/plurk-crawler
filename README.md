@@ -9,15 +9,16 @@ Download all the photos from plurk users. 下載指定的噗浪使用者的圖�
 3. (已解決) ~~如果使用者block搜尋,會無法下載,還沒寫不透過API,而直接去爬該使用者id~~
 4. (已解決) ~~Queue嚴重吃記憶體 -> Pool 沒有在迴圈裡 close~~
 
-作業系統:只測試過Windows
+作業系統:
 ---
-
+只測試過Windows
 前置作業:
 ---
 
 確定你有安裝python3.6+
-pip install plurk-oauth
-pip install base36
+
+ `pip install plurk-oauth `
+ `pip install base36 `
 
 有一個Plurk帳號
 並到http://www.plurk.com/PlurkApp/ 申請API服務
@@ -29,7 +30,7 @@ dada的教學文: https://dada.tw/2011/10/28/426/
     Access Token Secret
 後
 
-更改plurk.py裡的資料:
+## 更改plurk.py裡的資料:
 
 CONSUMER_KEY = 'App Key放這裡'
 CONSUMER_SECRET = 'App Secret放這裡'
@@ -38,7 +39,9 @@ ACCESS_TOKEN_SECRET = 'Access Token Secret放這裡'
 
 更改你想抓取的使用者帳號
 
-315行:userName = '你想抓取的使用者帳號' # User You Want To Crawl
+315行:
+
+userName = '你想抓取的使用者帳號' # User You Want To Crawl
 
 接著執行就會開始下載了
 
