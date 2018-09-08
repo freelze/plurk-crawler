@@ -7,6 +7,7 @@ CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET = ''
+mainUserName = ''
 
 from plurk_oauth import PlurkAPI
 import multiprocessing as mp
@@ -312,7 +313,8 @@ if __name__ == "__main__":
 
 	plurk = plurkApiLogin()
 
-	userName = '' # User You Want To Crawl
+	#userName = '' # User You Want To Crawl
+	userName = mainUserName
 	userSearch = plurk.callAPI('/APP/UserSearch/search', {'query': userName})['users']
 
 	if (len(userSearch) == 0):
