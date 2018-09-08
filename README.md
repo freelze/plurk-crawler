@@ -14,9 +14,9 @@ Download all the photos from plurk users.
 
 1.安裝python3.6+
 
-   `pip install plurk-oauth `
+   `$ pip install plurk-oauth `
  
-   `pip install base36 `
+   `$ pip install base36 `
 
 2.註冊一個Plurk帳號 ( https://www.plurk.com/signup )
 
