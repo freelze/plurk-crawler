@@ -34,7 +34,6 @@ Download all the photos from plurk users. 下載指定的噗浪使用者的圖�
 
 4.更改plurk.py裡的資料:
 
-
   CONSUMER_KEY = 'App Key放這裡'
 
   CONSUMER_SECRET = 'App Secret放這裡'
@@ -45,9 +44,7 @@ Download all the photos from plurk users. 下載指定的噗浪使用者的圖�
 
 5.更改你想抓取的使用者帳號
 
-  315行:
-
-  userName = '你想抓取的使用者帳號' # User You Want To Crawl
+  mainUserName = '你想抓取的使用者帳號'
 
 6.執行程式
 
