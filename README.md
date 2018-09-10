@@ -34,13 +34,13 @@ Download all the photos from plurk users.
 
 ### 4.更改plurk.py裡的資料:
 
-  CONSUMER_KEY = 'App Key放這裡'
+     CONSUMER_KEY = 'App Key放這裡'
 
-  CONSUMER_SECRET = 'App Secret放這裡'
+     CONSUMER_SECRET = 'App Secret放這裡'
 
-  ACCESS_TOKEN = 'Access Token放這裡'
+     ACCESS_TOKEN = 'Access Token放這裡'
 
-  ACCESS_TOKEN_SECRET = 'Access Token Secret放這裡'
+     ACCESS_TOKEN_SECRET = 'Access Token Secret放這裡'
 
 ### 5.執行程式
 
