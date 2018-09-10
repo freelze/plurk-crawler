@@ -16,13 +16,14 @@ from multiprocessing import Pool
 import re
 import json
 import os
+import sys
 import requests
 import calendar
 import time
 from time import gmtime, strftime
 # https://stackoverflow.com/questions/1181919/python-base-36-encoding 
 import base36
-import sys
+
 #from pprint import pprint
 
 # ref: https://stackoverflow.com/questions/7160737/python-how-to-validate-a-url-in-python-malformed-or-not
