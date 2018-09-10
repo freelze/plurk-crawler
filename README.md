@@ -12,7 +12,7 @@ Download all the photos from plurk users.
 前置作業:
 ---
 
-##### 1.安裝python3.6+
+### 1.安裝python3.6+
 
    `$ pip install plurk-oauth `
  
