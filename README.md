@@ -42,25 +42,21 @@ Download all the photos from plurk users.
 
   ACCESS_TOKEN_SECRET = 'Access Token Secret放這裡'
 
-5.更改你想抓取的使用者帳號
-
-  mainUserName = '你想抓取的使用者帳號'
-
-6.執行程式
+5.執行程式
 
 方法一:
 
-   使用cmd
+    使用cmd
 
-   $ python plurk.py
+    $ python plurk.py
 
-   再輸入你想抓的使用者名稱 ( 以空白分隔 )
+    再輸入你想抓的使用者名稱 ( 以空白分隔 )
 
-   username1 username2 username3
+    username1 username2 username3
 
 方法二:
 
-   $ python plurk.py username1 username2 username3
+    $ python plurk.py username1 username2 username3
 
 抓取速度參考:
 ---
