@@ -12,15 +12,15 @@ Download all the photos from plurk users.
 前置作業:
 ---
 
-1.安裝python3.6+
+##### 1.安裝python3.6+
 
    `$ pip install plurk-oauth `
  
    `$ pip install base36 `
 
-2.註冊一個Plurk帳號 ( https://www.plurk.com/signup )
+##### 2.註冊一個Plurk帳號 ( https://www.plurk.com/signup )
 
-3.申請API服務 http://www.plurk.com/PlurkApp/ 
+##### 3.申請API服務 http://www.plurk.com/PlurkApp/ 
 
   ( 請參考dada的教學文: https://dada.tw/2011/10/28/426/ )
 
@@ -32,7 +32,7 @@ Download all the photos from plurk users.
 +   Access Token Secret
     
 
-4.更改plurk.py裡的資料:
+##### 4.更改plurk.py裡的資料:
 
   CONSUMER_KEY = 'App Key放這裡'
 
@@ -42,7 +42,7 @@ Download all the photos from plurk users.
 
   ACCESS_TOKEN_SECRET = 'Access Token Secret放這裡'
 
-5.執行程式
+##### 5.執行程式
 
 方法一:
 
