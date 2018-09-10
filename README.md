@@ -56,6 +56,8 @@ Download all the photos from plurk users.
 
     $ python plurk.py username1 username2 username3
 
+`username` 就是 http://www.plurk.com/XXXXX 的 `XXXXX`
+
 抓取速度參考:
 ---
 
