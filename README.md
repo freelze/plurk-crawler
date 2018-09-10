@@ -46,8 +46,6 @@ Download all the photos from plurk users.
 
 方法一:
 
-    使用cmd
-
     $ python plurk.py
 
     再輸入你想抓的使用者名稱 ( 以空白分隔 )
