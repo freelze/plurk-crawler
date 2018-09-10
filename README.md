@@ -26,10 +26,10 @@ Download all the photos from plurk users.
 
   取得
 
-    App Key
-    App Secret 
-    Access Token  
-    Access Token Secret
++   App Key
++   App Secret 
++   Access Token  
++   Access Token Secret
     
 
 4.更改plurk.py裡的資料:
