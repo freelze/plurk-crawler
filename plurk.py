@@ -450,3 +450,7 @@ if __name__ == "__main__":
 		total_time = time.time() - t1
 		print("Total time: {}\n".format(total_time) )
 		# print("The average time crawling per post: ", total_time/len(plurk_id_list) if len(plurk_id_list) else 0)
+	
+	exitInput = input("\nPress Enter to exit")
+	if(exitInput == ''):
+		exit()
