@@ -371,9 +371,20 @@ if __name__ == "__main__":
 			else:
 				print("User Not Found!")
 				exit()
-		else:
+		elif(len(userSearch) == 1):
 			id = userSearch[0]['id']
 			print(userSearch[0]['display_name'])
+		else:
+			found = 0
+			for _len in range(len(userSearch)):
+				if(userSearch[_len]['nick_name'] == userName):
+					id = userSearch[_len]['id']
+					print(userSearch[_len]['display_name'])
+					found = 1
+					break
+			if(not found):
+				print("I can't find the user named ", userName)
+				exit(0)
 		
 		print('userSearch\n',userSearch)
 		
