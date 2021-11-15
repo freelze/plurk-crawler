@@ -71,16 +71,9 @@ def plurkApiLogin():
 	return _plurk
 	
 def parsePostsJob(i):
-
-	#basePath = os.getcwd() + '\\'
-	#basePath = os.getcwd() + '\\' + userName + '\\'
 	baseUrl = "https://www.plurk.com/p/"
 	image_path = './{}/'.format(userName)
-	#path = './' + userName
-	
 	thisPostMediaCount = 0
-		
-	#print(i['plurk_id'])
 
 	if (i['owner_id'] != id):
 		#print(type(i['owner_id']))
@@ -92,26 +85,13 @@ def parsePostsJob(i):
 	if (i['favorite_count'] > lowStandardFav):
 		#parsePostsJob.q.put(i['plurk_id']) # store count of posts
 		#print("===================================================================================")		
-		"""
-		old_stdout = sys.stdout
-		log_file = open("parsePostsJob.log","a")
-		sys.stdout = log_file
-		
-		sys.stdout = old_stdout
-		log_file.close()
-		"""
-		#print("plurk_id =",i['plurk_id'])
-		
 		# get Response images
 		getResponsesJob(i['plurk_id'])
 		
 		owner_id_int = i['owner_id']
 		owner_id = str(i['owner_id'])
-		#print("owner_id:", i['owner_id'])
 		base36_plurk_id = str(base36.dumps(i['plurk_id']))
-		#print("postUrl:", baseUrl + base36_plurk_id)
-		#print("posted:", i['posted'])
-
+		
 		splitStr = i['posted'].split()
 		abbr_to_num = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 		fileNameTime = splitStr[3] + '_' + str(abbr_to_num[splitStr[2]]) + '_' + splitStr[1]
@@ -128,91 +108,22 @@ def parsePostsJob(i):
 		for content in _list:
 			if (content[0:4] == 'href'):
 				content = content[:-1]
-				if (content[-3:] == 'jpg'):
+				supported_format = ['jpg','png','gif','mp4','webp','bmp','svg']
+				if (content[-3:] in supported_format): 
 					if (re.match(url_validation_regex, str(content[6:])) is None):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 						continue
 					if (urlExists(str(content[6:])) == False):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 						continue
-					#print(content[6:])
 					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-{3}.jpg".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), owner_id )
+					imageNameWithoutPath = "{0}-plurk-{1}-{2}-{3}.{4}".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), owner_id, str(content[-3:])
 					image_name = image_path + imageNameWithoutPath
-					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
-						#thisPostMediaCount) + '-' + owner_id + ".jpg"
-					#path = basePath + image_name
 					if (os.path.isfile(image_name)):
 						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
 						continue
 					print('[✓] donwloading {}'.format(imageNameWithoutPath))
 					with open(image_name, 'wb') as handler:
 						handler.write(requests.get(str(content[6:])).content)
-				elif (content[-3:] == 'png'):
-					if (re.match(url_validation_regex, str(content[6:])) is None):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					if (urlExists(str(content[6:])) == False):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					#print(content[6:])
-					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-{3}.png".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), owner_id )
-					image_name = image_path + imageNameWithoutPath
-					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
-						#thisPostMediaCount) + '-' + owner_id + ".png"
-					#path = basePath + image_name
-					if (os.path.isfile(image_name)):
-						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
-						continue
-					print('[✓] donwloading {}'.format(imageNameWithoutPath))
-					with open(image_name, 'wb') as handler:
-						handler.write(requests.get(str(content[6:])).content)
-				elif (content[-3:] == 'gif'):
-					if (re.match(url_validation_regex, str(content[6:])) is None):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					if (urlExists(str(content[6:])) == False):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					#print(content[6:])
-					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-{3}.gif".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), owner_id )
-					image_name = image_path + imageNameWithoutPath
-					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
-						#thisPostMediaCount) + '-' + owner_id + ".gif"
-					#path = basePath + image_name
-					if (os.path.isfile(image_name)):
-						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
-						continue
-					print('[✓] donwloading {}'.format(imageNameWithoutPath))
-					with open(image_name, 'wb') as handler:
-						handler.write(requests.get(str(content[6:])).content)
-				elif (content[-3:] == 'mp4'):
-					if (re.match(url_validation_regex, str(content[6:])) is None):
-						print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					if (urlExists(str(content[6:])) == False):
-						print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					print(content[6:])
-					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-{3}.mp4".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), owner_id )
-					image_name = image_path + imageNameWithoutPath
-					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
-						#thisPostMediaCount) + '-' + owner_id + ".mp4"
-					#path = basePath + image_name
-					if (os.path.isfile(image_name)):
-						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
-						continue
-					print('[✓] donwloading {}'.format(imageNameWithoutPath))	
-					with open(image_name, 'wb') as handler:
-						handler.write(requests.get(str(content[6:])).content)
-				#else:
-					#print("others link:", content[6:])
 		
-		#return i['plurk_id']
-		#return
 def getResponsesJob(pID):
 	"""
 	old_stdout = sys.stdout
@@ -247,18 +158,16 @@ def getResponsesJob(pID):
 				matchCase = matchCase[:-1]
 				matchCase = matchCase[6:]
 				matchList.append(matchCase)
-			for responseLink in matchList: 
-				if (responseLink[-4:] == '.jpg'):
+			for responseLink in matchList:
+				supported_format = ['jpg','png','gif','mp4','webp','bmp','svg']
+				if (responseLink[-3:] in supported_format): 								  
 					if (re.match(url_validation_regex, responseLink) is None):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 						continue
 					if (urlExists(responseLink) == False):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 						continue
-					
 					#response_count += 1
 					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-response-{3}-{4}.jpg".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), str(response_count), owner_id )
+					imageNameWithoutPath = "{0}-plurk-{1}-{2}-response-{3}-{4}.{5}".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), str(response_count), owner_id, responseLink[-3:])
 					#imageNameWithoutPath = "{0}-plurk-{1}-response-{2}-{3}.jpg".format( fileNameTime, base36_plurk_id, str(response_count), owner_id )
 					image_name = image_path + imageNameWithoutPath
 					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
@@ -271,54 +180,7 @@ def getResponsesJob(pID):
 					print('[✓] donwloading {}'.format(imageNameWithoutPath))
 					with open(image_name, 'wb') as handler:
 						handler.write(requests.get(str(responseLink)).content)
-				elif (responseLink[-4:] == '.png'):
-					if (re.match(url_validation_regex, responseLink) is None):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					if (urlExists(responseLink) == False):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					
-					#response_count += 1
-					
-					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-response-{3}-{4}.png".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), str(response_count), owner_id )
-					#imageNameWithoutPath = "{0}-plurk-{1}-response-{2}-{3}.jpg".format( fileNameTime, base36_plurk_id, str(response_count), owner_id )
-					image_name = image_path + imageNameWithoutPath
-					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
-						#thisPostMediaCount) + '-' + "response" + '-' + str(
-						#response_count) + '-' + owner_id + ".png"
-					#path = basePath + image_name
-					if (os.path.isfile(image_name)):
-						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
-						continue
-					print('[✓] donwloading {}'.format(imageNameWithoutPath))
-					with open(image_name, 'wb') as handler:
-						handler.write(requests.get(str(responseLink)).content)
-				elif (responseLink[-4:] == '.gif'):
-					if (re.match(url_validation_regex, responseLink) is None):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					if (urlExists(responseLink) == False):
-						#print("FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-						continue
-					
-					#response_count += 1
-					
-					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-response-{3}-{4}.gif".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), str(response_count), owner_id )
-					#imageNameWithoutPath = "{0}-plurk-{1}-response-{2}-{3}.jpg".format( fileNameTime, base36_plurk_id, str(response_count), owner_id )
-					image_name = image_path + imageNameWithoutPath
-					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
-						#thisPostMediaCount) + '-' + "response" + '-' + str(
-						#response_count) + '-' + owner_id + ".gif"
-					#path = basePath + image_name
-					if (os.path.isfile(image_name)):
-						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
-						continue
-					print('[✓] donwloading {}'.format(imageNameWithoutPath))
-					with open(image_name, 'wb') as handler:
-						handler.write(requests.get(str(responseLink)).content)
+				
 
 # https://stackoverflow.com/questions/3827065/can-i-use-a-multiprocessing-queue-in-a-function-called-by-pool-imap
 def get_cursor(_plurk, _userName, _owner_id, _lowStandardFav):
@@ -404,16 +266,6 @@ if __name__ == "__main__":
 			abbr_to_num = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 			timeOffset = splitStr[3] + '-' + str(abbr_to_num[splitStr[2]]) + '-' + splitStr[1] + 'T' + \
 						 splitStr[4]
-
-			# print(timeOffset)
-			"""
-            old_stdout = sys.stdout
-            log_file = open("timeOffset.log","a")
-            sys.stdout = log_file
-            print(timeOffset)
-            sys.stdout = old_stdout
-            log_file.close()
-            """
 			# Parse
 
 			lowStandardFav = -1
@@ -426,34 +278,7 @@ if __name__ == "__main__":
 			pool.map_async(parsePostsJob, json)
 
 			pool.close()
-		# pool.join()
 		pool.join()
-
-		# sys.stdout = old_stdout
-		# log_file.close()
-
-		"""
-        reQ = q.task_done()
-        print('state--->', reQ)
-        print("&&&&&&&&&&&&&&&&&&&")
-        while (not q.empty()):
-            ppid = q.get()
-            print(ppid)
-            plurk_id_list.append( ppid )
-            q.task_done()
-
-        print("&&&&&&&&&&&&&&&&&&&")"""
-		# print(plurk_id_list)
-
-		# q.join()
-		"""
-        while (q.empty()):
-            pool2 = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav, q))
-            p = pool2.map_async(getResponsesJob, plurk_id_list)  # map_async
-            pool2.close()
-            pool2.join()
-            break
-        """
 
 		print("============================")
 		# print(len(plurk_id_list))
