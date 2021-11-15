@@ -363,9 +363,8 @@ if __name__ == "__main__":
 			userExist = re.search(r"<title>.+</title>", userPlurkhtml.text)
 			title = userExist.group()[7:]
 			title = title[:-8]
-			if (title != 'User Not Found! - Plurk'):
-				# print("User Found!")
-				settings = re.search(r"var\sSETTINGS\s=\s\{\S+user_id\":(\d+),\S+}", userPlurkhtml.text)
+			if (title != 'User Not Found! - Plurk'): # User Found
+				settings = re.search(r"user_id\":\s(\d+)", userPlurkhtml.text) # var SETTINGS = {"user_id": XXXXXXXX, "message_me":  ...
 				id = int(settings.group(1))
 				print("user id =", id)
 			else:
