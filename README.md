@@ -11,16 +11,16 @@ Download all the photos from plurk users.
 
 前置作業:
 ---
+### 安裝 Python 3.6+
+### 下載程式碼
+    git clone https://github.com/freelze/plurk-crawler.git
 
-### 1.安裝python3.6+
+### 安裝 Python 相關套件    
+    pip install -r requirements.txt
 
-   `$ pip install plurk-oauth `
- 
-   `$ pip install base36 `
+### 註冊 Plurk 帳號 ( https://www.plurk.com/signup )
 
-### 2.註冊一個Plurk帳號 ( https://www.plurk.com/signup )
-
-### 3.申請API服務 http://www.plurk.com/PlurkApp/ 
+### 申請 API 服務 http://www.plurk.com/PlurkApp/ 
 
   ( 請參考dada的教學文: https://dada.tw/2011/10/28/426/ )
 
@@ -32,29 +32,18 @@ Download all the photos from plurk users.
 +   Access Token Secret
     
 
-### 4.更改plurk.py裡的資料:
+### 更改 .env 檔案的金鑰:
 
-     CONSUMER_KEY = 'App Key放這裡'
+     CONSUMER_KEY=App Key放這裡
 
-     CONSUMER_SECRET = 'App Secret放這裡'
+     CONSUMER_SECRET=App Secret放這裡
 
-     ACCESS_TOKEN = 'Access Token放這裡'
+     ACCESS_TOKEN=Access Token放這裡
 
-     ACCESS_TOKEN_SECRET = 'Access Token Secret放這裡'
+     ACCESS_TOKEN_SECRET=Access Token Secret放這裡
 
-### 5.執行程式
-
-方法一:
-
-    $ python plurk.py
-
-    再輸入你想抓的使用者名稱 ( 以空白分隔 )
-
-    username1 username2 username3
-
-方法二:
-
-    $ python plurk.py username1 username2 username3
+### 5.執行程
+    python plurk.py username1 username2 username3
 
 `username` 就是 http://www.plurk.com/使用者帳號 的 `使用者帳號`
 
