@@ -1,30 +1,27 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
+import base36  # https://stackoverflow.com/questions/1181919/python-base-36-encoding
+import calendar
+import json
+import multiprocessing as mp
+import os
+import re
+import requests
+import sys
+import time
+from dotenv import load_dotenv
+from multiprocessing import Pool
+from plurk_oauth import PlurkAPI
+from time import gmtime, strftime
+
+load_dotenv()
 # ref: https://github.com/clsung/plurk-oauth 
 # You can retrieve your app keys via the test tool at http://www.plurk.com/PlurkApp/
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
-ACCESS_TOKEN = ''
-ACCESS_TOKEN_SECRET = ''
-
-#mainUserName = ''
-
-from plurk_oauth import PlurkAPI
-import multiprocessing as mp
-from multiprocessing import Pool
-import re
-import json
-import os
-import sys
-import requests
-import calendar
-import time
-from time import gmtime, strftime
-# https://stackoverflow.com/questions/1181919/python-base-36-encoding 
-import base36
-
-#from pprint import pprint
+CONSUMER_KEY = os.getenv("CONSUMER_KEY")
+CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
 
 # ref: https://stackoverflow.com/questions/7160737/python-how-to-validate-a-url-in-python-malformed-or-not
 url_validation_regex = re.compile(
@@ -115,7 +112,7 @@ def parsePostsJob(i):
 					if (urlExists(str(content[6:])) == False):
 						continue
 					thisPostMediaCount += 1
-					imageNameWithoutPath = "{0}-plurk-{1}-{2}-{3}.{4}".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), owner_id, str(content[-3:])
+					imageNameWithoutPath = "{0}-plurk-{1}-{2}-{3}.{4}".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), owner_id, str(content[-3:]))
 					image_name = image_path + imageNameWithoutPath
 					if (os.path.isfile(image_name)):
 						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
@@ -165,15 +162,9 @@ def getResponsesJob(pID):
 						continue
 					if (urlExists(responseLink) == False):
 						continue
-					#response_count += 1
 					thisPostMediaCount += 1
 					imageNameWithoutPath = "{0}-plurk-{1}-{2}-response-{3}-{4}.{5}".format( fileNameTime, base36_plurk_id, str(thisPostMediaCount), str(response_count), owner_id, responseLink[-3:])
-					#imageNameWithoutPath = "{0}-plurk-{1}-response-{2}-{3}.jpg".format( fileNameTime, base36_plurk_id, str(response_count), owner_id )
 					image_name = image_path + imageNameWithoutPath
-					#image_name = fileNameTime + '-' + base36_plurk_id + '-' + str(
-						#thisPostMediaCount) + '-' + "response" + '-' + str(
-						#response_count) + '-' + owner_id + ".jpg"
-					#path = basePath + image_name
 					if (os.path.isfile(image_name)):
 						print( "[✗] {} was already downloaded.".format(imageNameWithoutPath))
 						continue
