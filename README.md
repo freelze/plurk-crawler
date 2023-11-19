@@ -1,6 +1,6 @@
 plurk-crawler
 =========================================================
-Download all the photos from plurk users.
+Download all the images from plurk users ( including images in the replies below ).
 
 下載一個噗浪使用者所有發過的圖片 ( 包含在下方回覆的圖片 )
 
@@ -18,11 +18,11 @@ Download all the photos from plurk users.
 ### 安裝 Python 相關套件    
     pip install -r requirements.txt
 
-### 註冊 Plurk 帳號 ( https://www.plurk.com/signup )
+### 註冊 Plurk 帳號：https://www.plurk.com/signup 
 
-### 申請 API 服務 http://www.plurk.com/PlurkApp/ 
+### 申請 API 服務：http://www.plurk.com/PlurkApp/ 
 
-  ( 請參考dada的教學文: https://dada.tw/2011/10/28/426/ )
+  ( 請參考 dada 的教學文: https://dada.tw/2011/10/28/426/ )
 
   取得
 
@@ -32,17 +32,15 @@ Download all the photos from plurk users.
 +   Access Token Secret
     
 
-### 更改 .env 檔案的金鑰:
+### 修改 .env 檔案的金鑰:
 
-     CONSUMER_KEY=App Key放這裡
++ CONSUMER_KEY=***App Key放這裡***
++ CONSUMER_SECRET=***App Secret放這裡***
++ ACCESS_TOKEN=***Access Token放這裡***
++ ACCESS_TOKEN_SECRET=***Access Token Secret放這裡***
 
-     CONSUMER_SECRET=App Secret放這裡
 
-     ACCESS_TOKEN=Access Token放這裡
-
-     ACCESS_TOKEN_SECRET=Access Token Secret放這裡
-
-### 5.執行程
+### 執行程式
     python plurk.py username1 username2 username3
 
 `username` 就是 http://www.plurk.com/使用者帳號 的 `使用者帳號`
@@ -50,15 +48,15 @@ Download all the photos from plurk users.
 抓取速度參考:
 ---
 
-爬取 5273 個噗浪貼文
+爬取 5273 個噗浪貼文，
 
-共花了 672.0514919757843 秒
+總共花費 672.0514919757843 秒，
 
-平均一張貼文花了 0.12745144926 秒
+平均一張貼文花了 0.12745144926 秒，
 
-P.S.每個貼文留言數、圖片數不一樣
+每個貼文留言數、圖片數不一樣，
 
-所以參考就好
+僅供參考。
 
 目前已知Bug:
 ---
