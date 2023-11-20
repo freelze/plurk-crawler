@@ -16,8 +16,7 @@ from plurk_oauth import PlurkAPI
 from time import gmtime, strftime
 
 load_dotenv()
-# ref: https://github.com/clsung/plurk-oauth 
-# You can retrieve your app keys via the test tool at http://www.plurk.com/PlurkApp/
+
 CONSUMER_KEY = os.getenv("CONSUMER_KEY")
 CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
