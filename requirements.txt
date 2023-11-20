@@ -1,0 +1,3 @@
+base36
+plurk_oauth
+python-dotenv
