@@ -2,7 +2,7 @@
 
 Download all images posted by Plurk users ( including images in the replies below ).
 
-下載一個噗浪使用者所有發過的圖片 ( 包含在下方回覆的圖片 )
+下載一個噗浪使用者發過的所有圖片 ( 包含在下方回覆的圖片 )
 
 
 ## 前置作業
