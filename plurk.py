@@ -15,6 +15,7 @@ from multiprocessing import Pool
 from plurk_oauth import PlurkAPI
 from time import gmtime, strftime
 
+import pprint
 load_dotenv()
 
 CONSUMER_KEY = os.getenv("CONSUMER_KEY")
@@ -72,18 +73,9 @@ def parsePostsJob(i):
 	thisPostMediaCount = 0
 
 	if (i['owner_id'] != id):
-		#print(type(i['owner_id']))
-		#print(type(id))
-		#print("posted:", i['posted'])
-		#print("i['owner_id']:",i['owner_id'])
-		#print("@@@@@@@@@@replurk@@@@@@@@@@")
 		return
 	if (i['favorite_count'] > lowStandardFav):
-		#parsePostsJob.q.put(i['plurk_id']) # store count of posts
-		#print("===================================================================================")		
-		# get Response images
-		getResponsesJob(i['plurk_id'])
-		
+		getResponsesJob(i['plurk_id'])	
 		owner_id_int = i['owner_id']
 		owner_id = str(i['owner_id'])
 		base36_plurk_id = str(base36.dumps(i['plurk_id']))
@@ -91,15 +83,6 @@ def parsePostsJob(i):
 		splitStr = i['posted'].split()
 		abbr_to_num = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 		fileNameTime = splitStr[3] + '_' + str(abbr_to_num[splitStr[2]]) + '_' + splitStr[1]
-		#print("******************")
-		#print("porn:", i['porn'])
-		#print("favorite_count:", i['favorite_count'])
-		#print("response_count:", i['response_count'])
-		#pprint(i['content_raw'])  # type:str
-
-		#parsePostsJob.q.put(i['plurk_id'])
-
-		# parse main plurk
 		_list = i['content'].split()
 		for content in _list:
 			if (content[0:4] == 'href'):
@@ -121,22 +104,10 @@ def parsePostsJob(i):
 						handler.write(requests.get(str(content[6:])).content)
 		
 def getResponsesJob(pID):
-	"""
-	old_stdout = sys.stdout
-	log_file = open("getResponsesJob.log","a")
-	sys.stdout = log_file
-	print(pID) 
-	sys.stdout = old_stdout
-	log_file.close()
-	"""
 	owner_id = str(id)
 	res_raw_json = plurk.callAPI('/APP/Responses/get', {'plurk_id':pID} )
-	#basePath = os.getcwd() + '\\'
 	image_path = './{}/'.format(userName)
 	base36_plurk_id = str(base36.dumps(pID))
-
-	# for loop each responses
-	#response_media = 0
 	response_count = 0
 	thisPostMediaCount = 0
 	
@@ -182,71 +153,29 @@ def get_cursor(_plurk, _userName, _owner_id, _lowStandardFav):
 	id = _owner_id
 	global lowStandardFav
 	lowStandardFav = _lowStandardFav
-
-	#parsePostsJob.q = _queue
-
+ 
 if __name__ == "__main__":
-
-	#old_stdout = sys.stdout
-	#log_file = open("message.log","a")
-	#sys.stdout = log_file
-	
 	t1 = time.time()
-
 	plurk = plurkApiLogin()
 
-	#userName = '' # User You Want To Crawl
-	#inputUserName = mainUserName
 	if( len(sys.argv) == 1 ):
-		#print("Please enter at least one username OR several usernames with space separated:")
 		userNamesList = input("Please enter at least one username OR several usernames with space separated:")
 		userNamesList = userNamesList.split()
-		#exit()
 	else:
 		userNamesList = sys.argv[1:]
-	#for userName in sys.argv[1:]:
+
 	for userName in userNamesList:
-		userSearch = plurk.callAPI('/APP/UserSearch/search', {'query': userName})['users']
+		public_profile = plurk.callAPI('/APP/Profile/getPublicProfile', {'user_id':userName})
+		if(public_profile is None):
+			print(f'User {userName} Not Found!')
+			exit()
+		id = public_profile['user_info']['id']
 
-		if (len(userSearch) == 0):
-			userPlurkUrl = 'https://www.plurk.com/' + userName
-			userPlurkhtml = requests.get(userPlurkUrl, timeout=10)
-
-			userExist = re.search(r"<title>.+</title>", userPlurkhtml.text)
-			title = userExist.group()[7:]
-			title = title[:-8]
-			if (title != 'User Not Found! - Plurk'): # User Found
-				settings = re.search(r"user_id\":\s(\d+)", userPlurkhtml.text) # var SETTINGS = {"user_id": XXXXXXXX, "message_me":  ...
-				id = int(settings.group(1))
-				print("user id =", id)
-			else:
-				print("User Not Found!")
-				exit()
-		elif(len(userSearch) == 1):
-			id = userSearch[0]['id']
-			print(userSearch[0]['display_name'])
-		else:
-			found = 0
-			for _len in range(len(userSearch)):
-				if(userSearch[_len]['nick_name'] == userName):
-					id = userSearch[_len]['id']
-					print(userSearch[_len]['display_name'])
-					found = 1
-					break
-			if(not found):
-				print("I can't find the user named ", userName)
-				exit(0)
-		
-		print('userSearch\n',userSearch)
-		
 		path = './' + userName
 		if not os.path.exists(path):
 			os.mkdir(path);
 		
 		timeOffset = strftime("%Y-%m-%dT%H:%M:%S", gmtime())
-
-		# q = mp.Queue()
-		# q = mp.JoinableQueue()
 
 		while (True):
 			json = getPublicPlurks(plurk, id, timeOffset)
@@ -256,7 +185,6 @@ if __name__ == "__main__":
 			abbr_to_num = {name: num for num, name in enumerate(calendar.month_abbr) if num}
 			timeOffset = splitStr[3] + '-' + str(abbr_to_num[splitStr[2]]) + '-' + splitStr[1] + 'T' + \
 						 splitStr[4]
-			# Parse
 
 			lowStandardFav = -1
 			postCount = 0
@@ -266,15 +194,11 @@ if __name__ == "__main__":
 
 			pool = Pool(initializer=get_cursor, initargs=(plurk, userName, id, lowStandardFav))
 			pool.map_async(parsePostsJob, json)
-
 			pool.close()
 		pool.join()
 
-		print("============================")
-		# print(len(plurk_id_list))
 		total_time = time.time() - t1
-		print("Total time: {}\n".format(total_time) )
-		# print("The average time crawling per post: ", total_time/len(plurk_id_list) if len(plurk_id_list) else 0)
+		print("============================\nTotal time: {}\n".format(total_time) )
 	
 	exitInput = input("\nPress Enter to exit")
 	if(exitInput == ''):
