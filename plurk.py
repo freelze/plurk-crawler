@@ -15,7 +15,6 @@ from multiprocessing import Pool
 from plurk_oauth import PlurkAPI
 from time import gmtime, strftime
 
-import pprint
 load_dotenv()
 
 CONSUMER_KEY = os.getenv("CONSUMER_KEY")
