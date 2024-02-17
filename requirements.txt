@@ -1,3 +1,6 @@
+asyncio
+aiohttp
+aiomultiprocess
 base36
 plurk_oauth
 python-dotenv
