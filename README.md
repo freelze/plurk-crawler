@@ -7,7 +7,7 @@ Download all images posted by Plurk users ( including images in the replies belo
 
 ## 前置作業
 
-### 安裝 Python 3.7+
+### 安裝 Python 3.9+
 ### 下載程式碼
 
     git clone https://github.com/freelze/plurk-crawler.git
