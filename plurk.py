@@ -34,10 +34,6 @@ async def urlExists(session, path):
     except Exception as e:
         print(f"Error checking URL: {e}")
         return False
-
-async def fetch(session, path):
-    async with session.get(path) as response:
-        return await response.read()
     
 async def download_image(session, image_url, image_name):
     async with session.get(image_url) as response:
