@@ -64,9 +64,15 @@ async def get_public_plurks(plurk, _id, time_offset, limit=30):
     
 async def get_responses(plurk, p_id):
     try:
-        raw_json = await asyncio.to_thread(partial(plurk.callAPI,
-                                                  '/APP/Responses/get',
-                                                  {'plurk_id': p_id}))
+        raw_json = await asyncio.to_thread(
+            partial(
+                plurk.callAPI,
+                '/APP/Responses/get',
+                {
+                    'plurk_id': p_id
+                }
+            )
+        )
         return raw_json
     except Exception as e:
         print(f"An error occurred while fetching responses: {e}")
